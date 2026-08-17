@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache"
 import { createClient } from "@/lib/supabase/server"
+import config from "@/config"
 
 // CRUD de core_items vía Server Actions. La RLS de Supabase ya
 // garantiza que cada quien solo toca sus filas; aun así filtramos
@@ -16,44 +17,62 @@ async function requireUser() {
   return { supabase, user }
 }
 
-export async function createItem(formData) {
-  const title = formData.get("title")?.toString().trim()
-  const description = formData.get("description")?.toString().trim() || null
-  if (!title) return
+const validAreas = new Set(config.diagnostics.areas.map(({ value }) => value))
+const validStatuses = new Set(config.diagnostics.statuses.map(({ value }) => value))
+
+function diagnosisFrom(formData) {
+  const organization = formData.get("organization")?.toString().trim()
+  const challenge = formData.get("challenge")?.toString().trim()
+  const requestedArea = formData.get("area")?.toString()
+  const requestedStatus = formData.get("status")?.toString()
+  if (!organization || !challenge) return null
+
+  return {
+    organization,
+    challenge,
+    area: validAreas.has(requestedArea) ? requestedArea : "integral",
+    status: validStatuses.has(requestedStatus) ? requestedStatus : "nuevo",
+    notes: formData.get("notes")?.toString().trim() || null,
+  }
+}
+
+export async function createDiagnosis(formData) {
+  const diagnosis = diagnosisFrom(formData)
+  if (!diagnosis) return
 
   const { supabase, user } = await requireUser()
-  await supabase.from("core_items").insert({
-    user_id: user.id,
-    title,
-    description,
-  })
+  const { error } = await supabase
+    .from("core_items")
+    .insert({ user_id: user.id, ...diagnosis })
+  if (error) throw new Error(error.message)
   revalidatePath("/dashboard")
 }
 
-export async function toggleItem(formData) {
+export async function updateDiagnosis(formData) {
   const id = formData.get("id")?.toString()
-  const status = formData.get("status")?.toString()
-  if (!id) return
+  const diagnosis = diagnosisFrom(formData)
+  if (!id || !diagnosis) return
 
-  const next = status === "done" ? "active" : "done"
   const { supabase, user } = await requireUser()
-  await supabase
+  const { error } = await supabase
     .from("core_items")
-    .update({ status: next })
+    .update(diagnosis)
     .eq("id", id)
     .eq("user_id", user.id)
+  if (error) throw new Error(error.message)
   revalidatePath("/dashboard")
 }
 
-export async function deleteItem(formData) {
+export async function deleteDiagnosis(formData) {
   const id = formData.get("id")?.toString()
   if (!id) return
 
   const { supabase, user } = await requireUser()
-  await supabase
+  const { error } = await supabase
     .from("core_items")
     .delete()
     .eq("id", id)
     .eq("user_id", user.id)
+  if (error) throw new Error(error.message)
   revalidatePath("/dashboard")
 }

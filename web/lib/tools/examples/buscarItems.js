@@ -1,13 +1,13 @@
 import { createClient } from "@/lib/supabase/server"
 
-// Tool de ejemplo: busca items del usuario por coincidencia en el título.
+// Tool de ejemplo: busca diagnósticos por organización o reto.
 export const buscarItems = {
-  name: "buscar_items",
-  description: "Busca items del usuario por coincidencia en el título.",
+  name: "buscar_diagnosticos",
+  description: "Busca diagnósticos por organización o reto de comunicación.",
   parameters: {
     type: "object",
     properties: {
-      query: { type: "string", description: "Texto a buscar en el título." },
+      query: { type: "string", description: "Organización o reto a buscar." },
     },
     required: ["query"],
     additionalProperties: false,
@@ -21,9 +21,9 @@ export const buscarItems = {
 
     const { data, error } = await supabase
       .from("core_items")
-      .select("id, title, description, status")
+      .select("id, organization, challenge, area, status, notes")
       .eq("user_id", user.id)
-      .ilike("title", `%${query}%`)
+      .or(`organization.ilike.%${query}%,challenge.ilike.%${query}%`)
     if (error) throw new Error(error.message)
     return { ok: true, items: data }
   },

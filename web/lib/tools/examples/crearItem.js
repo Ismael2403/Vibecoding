@@ -1,20 +1,25 @@
 import { createClient } from "@/lib/supabase/server"
 
-// Tool de ejemplo: crea un item en core_items del usuario autenticado.
+// Tool de ejemplo: crea un diagnóstico del usuario autenticado.
 // El alumno solo escribe execute(); el registry hace el resto.
 export const crearItem = {
-  name: "crear_item",
-  description: "Crea un nuevo item en la lista del usuario autenticado.",
+  name: "crear_diagnostico",
+  description: "Crea un diagnóstico de comunicación para una organización.",
   parameters: {
     type: "object",
     properties: {
-      title: { type: "string", description: "Título del item." },
-      description: { type: "string", description: "Descripción opcional." },
+      organization: { type: "string", description: "Nombre de la organización." },
+      challenge: { type: "string", description: "Reto de comunicación." },
+      area: {
+        type: "string",
+        enum: ["integral", "institucional", "interna", "comercial", "digital", "politica"],
+      },
+      notes: { type: "string", description: "Contexto o próximos pasos." },
     },
-    required: ["title"],
+    required: ["organization", "challenge"],
     additionalProperties: false,
   },
-  async execute({ title, description = null }) {
+  async execute({ organization, challenge, area = "integral", notes = null }) {
     const supabase = await createClient()
     const {
       data: { user },
@@ -23,7 +28,7 @@ export const crearItem = {
 
     const { data, error } = await supabase
       .from("core_items")
-      .insert({ user_id: user.id, title, description })
+      .insert({ user_id: user.id, organization, challenge, area, notes })
       .select()
       .single()
     if (error) throw new Error(error.message)

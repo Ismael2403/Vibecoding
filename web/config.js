@@ -102,6 +102,55 @@ const config = {
   },
 
   // -----------------------------------------------------------
+  // Feature principal: diagnósticos de comunicación
+  // -----------------------------------------------------------
+  diagnostics: {
+    singular: "diagnóstico",
+    plural: "diagnósticos",
+    title: "Diagnósticos de comunicación",
+    subtitle:
+      "Registra los retos de cada organización y acompáñalos desde el análisis hasta la implementación.",
+    createTitle: "Nuevo diagnóstico",
+    emptyTitle: "Aún no hay diagnósticos.",
+    emptyBody: "Registra el primero para comenzar a ordenar el reto de comunicación.",
+    loadError: "No pudimos cargar los diagnósticos.",
+    fields: {
+      organization: { label: "Organización", placeholder: "Nombre de la organización" },
+      challenge: {
+        label: "Reto de comunicación",
+        placeholder: "Describe el problema, sus señales y el objetivo que se busca alcanzar",
+      },
+      area: { label: "Área principal" },
+      status: { label: "Estatus" },
+      notes: {
+        label: "Notas",
+        placeholder: "Contexto, públicos involucrados o próximos pasos",
+      },
+    },
+    actions: {
+      create: "Crear diagnóstico",
+      edit: "Editar diagnóstico",
+      save: "Guardar cambios",
+      delete: "Eliminar diagnóstico",
+    },
+    areas: [
+      { value: "integral", label: "Integral" },
+      { value: "institucional", label: "Institucional" },
+      { value: "interna", label: "Interna" },
+      { value: "comercial", label: "Comercial" },
+      { value: "digital", label: "Digital" },
+      { value: "politica", label: "Política y gubernamental" },
+    ],
+    statuses: [
+      { value: "nuevo", label: "Nuevo" },
+      { value: "en_analisis", label: "En análisis" },
+      { value: "propuesta", label: "Propuesta" },
+      { value: "en_ejecucion", label: "En ejecución" },
+      { value: "cerrado", label: "Cerrado" },
+    ],
+  },
+
+  // -----------------------------------------------------------
   // Landing
   // -----------------------------------------------------------
   landing: {
