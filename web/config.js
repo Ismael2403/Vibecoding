@@ -44,7 +44,7 @@ const config = {
   // -----------------------------------------------------------
   features: {
     waitlist: true,
-    googleAuth: false,
+    googleAuth: true,
     emailLogin: false,
     aiChat: false,
     toolUse: false,
