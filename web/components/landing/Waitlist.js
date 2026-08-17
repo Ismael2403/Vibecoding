@@ -34,7 +34,7 @@ export default function Waitlist() {
   }
 
   return (
-    <section id="waitlist" className="border-t border-base-200 bg-base-100 py-20 md:py-28">
+    <section id="contacto" className="border-t border-base-200 bg-base-100 py-20 md:py-28">
       <div className="mx-auto max-w-2xl px-4 text-center">
         <p className="text-sm font-medium uppercase tracking-wider text-primary">{eyebrow}</p>
         <h2 className="mt-3 text-3xl font-bold tracking-tight md:text-4xl">{title}</h2>

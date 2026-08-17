@@ -1,6 +1,7 @@
 import Hero from "@/components/landing/Hero"
 import Problem from "@/components/landing/Problem"
 import Features from "@/components/landing/Features"
+import Process from "@/components/landing/Process"
 import Pricing from "@/components/landing/Pricing"
 import FAQ from "@/components/landing/FAQ"
 import FinalCta from "@/components/landing/FinalCta"
@@ -13,6 +14,7 @@ export default function HomePage() {
       <Hero />
       <Problem />
       <Features />
+      <Process />
       {config.features.pricing && <Pricing />}
       <FAQ />
       <FinalCta />

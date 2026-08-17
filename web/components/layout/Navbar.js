@@ -26,8 +26,8 @@ export default function Navbar() {
           </div>
 
           <Link href="/" className="flex items-center gap-2 text-lg font-bold tracking-tight">
-            <Logo className="size-7" />
-            {config.brand.logoText}
+            <Logo className="h-12 w-14" priority />
+            <span className="sr-only">{config.brand.logoText}</span>
           </Link>
         </div>
 
@@ -50,7 +50,7 @@ export default function Navbar() {
               Entrar
             </Link>
           )}
-          <Link href="#waitlist" className="btn btn-sm btn-accent">
+          <Link href={config.landing.hero.cta.href} className="btn btn-sm btn-accent">
             {config.landing.hero.cta.label}
           </Link>
         </div>

@@ -1,6 +1,22 @@
-// Marca de Vibecoding: una "V" con forma de símbolo de raíz cuadrada (√).
-// Cuadrado redondeado con el color primary y el trazo en blanco.
-export default function Logo({ className = "size-7" }) {
+import Image from "next/image"
+import config from "@/config"
+
+export default function Logo({ className = "size-7", priority = false }) {
+  if (config.brand.logoSrc) {
+    return (
+      <span className={`relative inline-block overflow-hidden ${className}`}>
+        <Image
+          src={config.brand.logoSrc}
+          alt={`Logo de ${config.app.name}`}
+          fill
+          sizes="160px"
+          className="object-contain"
+          priority={priority}
+        />
+      </span>
+    )
+  }
+
   return (
     <span
       className={`inline-flex items-center justify-center rounded-lg bg-primary text-primary-content ${className}`}

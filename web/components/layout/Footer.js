@@ -16,7 +16,7 @@ function FooterLink({ link, className }) {
 }
 
 export default function Footer() {
-  const { tagline, columns = [] } = config.landing.footer
+  const { tagline, columns = [], legal } = config.landing.footer
 
   return (
     <footer className="border-t border-base-200 bg-base-100">
@@ -24,8 +24,8 @@ export default function Footer() {
         <div className="grid gap-10 md:grid-cols-[1.5fr_repeat(3,1fr)]">
           <div>
             <div className="flex items-center gap-2">
-              <Logo className="size-6" />
-              <span className="text-lg font-bold">{config.brand.logoText}</span>
+              <Logo className="h-24 w-28" />
+              <span className="sr-only">{config.brand.logoText}</span>
             </div>
             <p className="mt-3 max-w-xs text-sm text-base-content/60">{tagline}</p>
           </div>
@@ -51,7 +51,7 @@ export default function Footer() {
           <span>
             © {new Date().getFullYear()} {config.brand.logoText}
           </span>
-          <span>Hecho por Pedro Gutiérrez (Roni) · Curso Vibe Code con Change and Code</span>
+          <span>{legal}</span>
         </div>
       </div>
     </footer>

@@ -14,22 +14,17 @@ import config from "@/config"
 // Todo el copy sale de config.js para mantener una sola fuente de verdad.
 export default function WaitlistConfirm() {
   const appName = config.app.name
+  const { preview, heading, body } = config.email.waitlist
 
   return (
     <Html lang={config.app.locale}>
       <Head />
-      <Preview>{`Estás en la lista de ${appName}`}</Preview>
+      <Preview>{preview}</Preview>
       <Body style={main}>
         <Container style={container}>
           <Section>
-            <Heading style={h1}>¡Listo! Ya estás en la lista 🎉</Heading>
-            <Text style={text}>
-              Gracias por tu interés en <strong>{appName}</strong>. Te
-              avisaremos en cuanto abramos cupos para la siguiente cohorte.
-            </Text>
-            <Text style={text}>
-              Mientras tanto, si tienes preguntas puedes responder a este correo.
-            </Text>
+            <Heading style={h1}>{heading}</Heading>
+            <Text style={text}>{body}</Text>
             <Text style={footer}>
               {appName} · {config.landing.footer.tagline}
             </Text>

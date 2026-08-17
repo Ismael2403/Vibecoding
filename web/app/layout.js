@@ -49,7 +49,10 @@ export default function RootLayout({ children }) {
       data-theme="vibecoding"
       suppressHydrationWarning
       className={`${spaceGrotesk.variable} ${dmSans.variable}`}
-      style={{ "--color-primary": config.brand.primary }}
+      style={{
+        "--color-primary": config.brand.primary,
+        "--color-accent": config.brand.accent,
+      }}
     >
       <body className="bg-base-100 text-base-content">
         <script

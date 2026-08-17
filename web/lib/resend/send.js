@@ -21,7 +21,7 @@ export async function sendEmail({ to, subject, body }) {
 
   const { error } = await resend.emails.send({
     from: config.email.from,
-    replyTo: config.email.replyTo,
+    ...(config.email.replyTo ? { replyTo: config.email.replyTo } : {}),
     to,
     subject,
     text: body,
@@ -40,9 +40,9 @@ export async function sendWaitlistConfirm(to) {
 
   const { error } = await resend.emails.send({
     from: config.email.from,
-    replyTo: config.email.replyTo,
+    ...(config.email.replyTo ? { replyTo: config.email.replyTo } : {}),
     to,
-    subject: `Estás en la lista de ${config.app.name}`,
+    subject: config.email.waitlist.subject,
     react: <WaitlistConfirm />,
   })
 
@@ -59,7 +59,7 @@ export async function sendWelcome(to, name) {
 
   const { error } = await resend.emails.send({
     from: config.email.from,
-    replyTo: config.email.replyTo,
+    ...(config.email.replyTo ? { replyTo: config.email.replyTo } : {}),
     to,
     subject: `Bienvenido a ${config.app.name}`,
     react: <Welcome name={name} />,

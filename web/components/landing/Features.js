@@ -18,7 +18,7 @@ export default function Features() {
   const { eyebrow, title, subtitle, items } = config.landing.features
 
   return (
-    <section id="features" className="border-t border-base-200 bg-base-100 py-20 md:py-28">
+    <section id="servicios" className="border-t border-base-200 bg-base-100 py-20 md:py-28">
       <div className="mx-auto max-w-6xl px-4">
         <div className="mx-auto max-w-2xl text-center">
           <p className="text-sm font-medium uppercase tracking-wider text-primary">{eyebrow}</p>
